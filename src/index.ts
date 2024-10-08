@@ -5,6 +5,7 @@ import { SQFSuperFluidStrategy } from "./strategies/SuperFluidStrategy/SQFSuperF
 import { DonationVotingMerkleDistributionStrategy } from "./strategies/DonationVotingMerkleDistributionStrategy/DonationVotingMerkleDistribution";
 import { DirectGrantsStrategy } from "./strategies/DirectGrants/DirectGrantsStrategy";
 import { DirectGrantsLiteStrategy } from "./strategies/DirectGrantsLiteStrategy/DirectGrantsLite";
+import { YeeterStrategy } from "./strategies/YeeterStrategy/Yeeter";
 import { DirectAllocationStrategy } from "./strategies/DirectAllocationStrategy/DirectAllocationStrategy";
 import { StrategyFactory } from "./strategies/StrategyFactory/StrategyFactory";
 
@@ -17,6 +18,7 @@ export * as MicroGrantsStrategyTypes from "./strategies/MicroGrantsStrategy/type
 export * as SQFSuperFluidStrategyTypes from "./strategies/SuperFluidStrategy/types";
 export * as DirectGrantsStrategyTypes from "./strategies/DirectGrants/types";
 export * as DirectGrantsLiteStrategyTypes from "./strategies/DirectGrantsLiteStrategy/types";
+export * as YeeterStrategyTypes from "./strategies/YeeterStrategy/types";
 export { StrategyFactoryType } from "./strategies/StrategyFactory/StrategyFactory";
 
 export { abi as AlloAbi } from "./Allo/allo.config";
@@ -27,6 +29,7 @@ export { abi as MicroGrantsStrategyAbi } from "./strategies/MicroGrantsStrategy/
 export { abi as SQFSuperFluidStrategyAbi } from "./strategies/SuperFluidStrategy/superfluid.config";
 export { abi as DirectGrantsStrategyAbi } from "./strategies/DirectGrants/directGrants.config";
 export { abi as DirectGrantsLiteStrategyAbi } from "./strategies/DirectGrantsLiteStrategy/directGrantsLite.config";
+export { abi as YeeterStrategyAbi } from "./strategies/YeeterStrategy/yeeter.config";
 export { abi as StrategyFactoryDGLAbi } from "./strategies/StrategyFactory/strategyFactory.DGL.config";
 export { abi as StrategyFactoryDVMDTAbi } from "./strategies/StrategyFactory/strategyFactory.DVMDT.config";
 export { abi as DirectAllocationStrategyAbi } from "./strategies/DirectAllocationStrategy/directAllocation.config";
@@ -38,6 +41,7 @@ export {
   DonationVotingMerkleDistributionStrategy,
   DirectGrantsStrategy,
   DirectGrantsLiteStrategy,
+  YeeterStrategy,
   StrategyFactory,
   DirectAllocationStrategy,
 };

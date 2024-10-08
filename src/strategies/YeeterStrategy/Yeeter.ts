@@ -177,8 +177,11 @@ export class YeeterStrategy {
    */
   public async getInitializeData(data: InitializeData): Promise<`0x${string}`> {
     const encodedData: `0x${string}` = encodeAbiParameters(
-      parseAbiParameters("bytes"),
-      [data]
+      parseAbiParameters("(bytes, uint64)"),
+      [[
+        data.data,
+        data.poolId,
+      ]]
     );
 
     return encodedData;
@@ -238,28 +241,7 @@ export class YeeterStrategy {
     const encodedData = encodeFunctionData({
       abi,
       functionName: "registerRecipient",
-      args: [data, data.sender],
-    });
-
-    return {
-      to: this.strategy!,
-      data: encodedData,
-      value: "0",
-    };
-  }
-
-  /**
-   * Get the transaction data for a multicall
-   * @param data An array of encoded function calls
-   * @returns TransactionData The transaction data for the multicall
-   */
-  public multicall(data: `0x${string}`[]): TransactionData {
-    this.checkStrategy();
-
-    const encodedData = encodeFunctionData({
-      abi,
-      functionName: "multicall",
-      args: [data],
+      args: [data.data, data.sender],
     });
 
     return {

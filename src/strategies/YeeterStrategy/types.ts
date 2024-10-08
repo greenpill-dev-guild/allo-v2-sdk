@@ -8,7 +8,7 @@ export type Recipient = {
 
 // Update RegisterData type
 export type RegisterData = {
-  recipientId: `0x${string}`;
+  sender: `0x${string}`;
   data: `0x${string}`; // Encoded data
 };
 
@@ -20,7 +20,7 @@ export type InitializeData = {
 
 // Update Allocation type
 export type Allocation = {
-  recipientIds: `0x${string}[]`;
+  recipientIds: `0x${string}`[];
   amounts: bigint[];
   token: `0x${string}`;
 };
