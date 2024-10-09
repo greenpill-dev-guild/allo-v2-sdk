@@ -20,9 +20,11 @@ export type InitializeData = {
 
 // Update Allocation type
 export type Allocation = {
-  recipientIds: `0x${string}`[];
-  amounts: bigint[];
+  recipientId: `0x${string}`;
+  amount: bigint;
   token: `0x${string}`;
+  // data: `0x${string}`;
+  // sender: `0x${string}`;
 };
 
 // Add new types based on the ABI

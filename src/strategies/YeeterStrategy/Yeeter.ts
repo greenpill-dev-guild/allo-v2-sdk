@@ -211,16 +211,14 @@ export class YeeterStrategy {
 
     let totalNativeAmount = BigInt(0);
 
-    if (allocations.token.toLowerCase() === NATIVE.toLowerCase()) {
-      totalNativeAmount = allocations.amounts.reduce((a, b) => a + BigInt(b), BigInt(0));
-    }
-
-    const encoded = this.getEncodedAllocation(allocations);
+    // if (allocations.token.toLowerCase() === NATIVE.toLowerCase()) {
+    //   totalNativeAmount = allocations.amounts.reduce((a, b) => a + BigInt(b), BigInt(0));
+    // }
 
     const encodedData = encodeFunctionData({
       abi,
       functionName: "allocate",
-      args: [allocations.recipientIds, allocations.amounts, allocations.token],
+      args: [allocations.recipientId, allocations.amount, allocations.token],
     });
 
     return {
