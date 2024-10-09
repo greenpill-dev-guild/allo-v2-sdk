@@ -4,8 +4,10 @@ import {
   Transport,
   encodeAbiParameters,
   encodeFunctionData,
+  encodePacked,
   extractChain,
   getContract,
+  keccak256,
   parseAbiParameters,
 } from "viem";
 import { Allo } from "../../Allo/Allo";
@@ -27,9 +29,10 @@ export class YeeterStrategy {
   private client: PublicClient<Transport, Chain>;
   private contract: any;
   private strategy: `0x${string}` | undefined;
+  private poolId: bigint
   private allo: Allo;
 
-  constructor({ chain, rpc, address }: ConstructorArgs) {
+  constructor({ chain, rpc, address, poolId }: ConstructorArgs) {
     const usedChain = extractChain({
       chains: supportedChains,
       id: chain as any,
@@ -37,6 +40,7 @@ export class YeeterStrategy {
 
     this.client = create(usedChain, rpc);
     this.allo = new Allo({ chain, rpc });
+    this.poolId = poolId || BigInt(-1)
 
     if (address) {
       this.contract = getContract({
@@ -211,14 +215,19 @@ export class YeeterStrategy {
 
     let totalNativeAmount = BigInt(0);
 
-    // if (allocations.token.toLowerCase() === NATIVE.toLowerCase()) {
-    //   totalNativeAmount = allocations.amounts.reduce((a, b) => a + BigInt(b), BigInt(0));
-    // }
+    for (const allocation of allocations.amounts) {
+      if (allocations.token.toLowerCase() === NATIVE.toLowerCase())
+        totalNativeAmount += allocation;
+    }
+
+    const allocationBytes = keccak256(
+      encodePacked(['address[]', 'uint256[]', 'address'], [allocations.recipientIds, allocations.amounts, allocations.token])
+    )
 
     const encodedData = encodeFunctionData({
-      abi,
+      abi: alloAbi,
       functionName: "allocate",
-      args: [allocations.recipientId, allocations.amount, allocations.token],
+      args: [this.poolId, allocationBytes],
     });
 
     return {

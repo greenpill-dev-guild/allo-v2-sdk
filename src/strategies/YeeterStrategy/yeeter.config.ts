@@ -37,7 +37,7 @@ export const abi = [
     "name": "allocate",
     "inputs": [
       {
-        "name": "_data",
+        "name": "_data", // contains recipientIds 0x[] and amounts bigint[] and token 0x
         "type": "bytes",
         "internalType": "bytes"
       },
