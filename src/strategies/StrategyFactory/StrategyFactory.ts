@@ -16,9 +16,13 @@ import {
   abi as DVMDTabi,
   getAddress as getAddressDVMDT,
 } from "./strategyFactory.DVMDT.config";
+import {
+  abi as YTRabi,
+  getAddress as getAddressYTR,
+} from "./strategyFactory.YTR.config";
 import { TransactionData } from "../../types";
 
-export type StrategyFactoryType = "DGL" | "DVMDT";
+export type StrategyFactoryType = "DGL" | "DVMDT" | "YTR";
 
 export class StrategyFactory {
   private client: PublicClient<Transport, Chain>;
@@ -58,6 +62,8 @@ export class StrategyFactory {
         return DGLabi;
       case "DVMDT":
         return DVMDTabi;
+      case "YTR":
+        return YTRabi;
       default:
         throw new Error("Invalid factory type");
     }
@@ -69,6 +75,8 @@ export class StrategyFactory {
         return getAddressDGL(chainId);
       case "DVMDT":
         return getAddressDVMDT(chainId);
+      case "YTR":
+        return getAddressYTR(chainId);
       default:
         throw new Error("Invalid factory type");
     }
