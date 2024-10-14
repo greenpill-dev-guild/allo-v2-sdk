@@ -14,8 +14,7 @@ export type RegisterData = {
 
 // Update InitializeData type
 export type InitializeData = {
-  poolId: bigint;
-  data: `0x${string}`; // Encoded data
+  data: `0x${string}`;
 };
 
 // Update Allocation type

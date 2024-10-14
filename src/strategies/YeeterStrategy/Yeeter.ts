@@ -184,7 +184,7 @@ export class YeeterStrategy {
       parseAbiParameters("(bytes, uint64)"),
       [[
         data.data,
-        data.poolId,
+        this.poolId,
       ]]
     );
 
