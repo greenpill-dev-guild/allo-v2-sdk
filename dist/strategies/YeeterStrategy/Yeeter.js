@@ -12,18 +12,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.YeeterStrategy = void 0;
 const viem_1 = require("viem");
 const Allo_1 = require("../../Allo/Allo");
+const allo_config_1 = require("../../Allo/allo.config");
 const Client_1 = require("../../Client/Client");
 const chains_config_1 = require("../../chains.config");
 const types_1 = require("../../types");
 const yeeter_config_1 = require("./yeeter.config");
 class YeeterStrategy {
-    constructor({ chain, rpc, address }) {
+    constructor({ chain, rpc, address, poolId }) {
         const usedChain = (0, viem_1.extractChain)({
             chains: chains_config_1.supportedChains,
             id: chain,
         });
         this.client = (0, Client_1.create)(usedChain, rpc);
         this.allo = new Allo_1.Allo({ chain, rpc });
+        this.poolId = poolId || BigInt(-1);
         if (address) {
             this.contract = (0, viem_1.getContract)({
                 address: address,
@@ -159,7 +161,7 @@ class YeeterStrategy {
         return __awaiter(this, void 0, void 0, function* () {
             const encodedData = (0, viem_1.encodeAbiParameters)((0, viem_1.parseAbiParameters)("(bytes, uint64)"), [[
                     data.data,
-                    data.poolId,
+                    this.poolId,
                 ]]);
             return encodedData;
         });
@@ -181,14 +183,15 @@ class YeeterStrategy {
     getAllocateData(allocations) {
         this.checkStrategy();
         let totalNativeAmount = BigInt(0);
-        if (allocations.token.toLowerCase() === types_1.NATIVE.toLowerCase()) {
-            totalNativeAmount = allocations.amounts.reduce((a, b) => a + BigInt(b), BigInt(0));
+        for (const allocation of allocations.amounts) {
+            if (allocations.token.toLowerCase() === types_1.NATIVE.toLowerCase())
+                totalNativeAmount += allocation;
         }
-        const encoded = this.getEncodedAllocation(allocations);
+        const allocationBytes = (0, viem_1.keccak256)((0, viem_1.encodePacked)(['address[]', 'uint256[]', 'address'], [allocations.recipientIds, allocations.amounts, allocations.token]));
         const encodedData = (0, viem_1.encodeFunctionData)({
-            abi: yeeter_config_1.abi,
+            abi: allo_config_1.abi,
             functionName: "allocate",
-            args: [allocations.recipientIds, allocations.amounts, allocations.token],
+            args: [this.poolId, allocationBytes],
         });
         return {
             to: this.strategy,

@@ -6,8 +6,9 @@ export declare class YeeterStrategy {
     private client;
     private contract;
     private strategy;
+    private poolId;
     private allo;
-    constructor({ chain, rpc, address }: ConstructorArgs);
+    constructor({ chain, rpc, address, poolId }: ConstructorArgs);
     getAllo(): Promise<Allo>;
     setContract(address: `0x${string}`): void;
     private checkStrategy;

@@ -6,6 +6,7 @@ const chains_config_1 = require("../../chains.config");
 const Client_1 = require("../../Client/Client");
 const strategyFactory_DGL_config_1 = require("./strategyFactory.DGL.config");
 const strategyFactory_DVMDT_config_1 = require("./strategyFactory.DVMDT.config");
+const strategyFactory_YTR_config_1 = require("./strategyFactory.YTR.config");
 class StrategyFactory {
     constructor({ chain, factoryType, address, rpc, }) {
         const usedChain = (0, viem_1.extractChain)({
@@ -24,6 +25,8 @@ class StrategyFactory {
                 return strategyFactory_DGL_config_1.abi;
             case "DVMDT":
                 return strategyFactory_DVMDT_config_1.abi;
+            case "YTR":
+                return strategyFactory_YTR_config_1.abi;
             default:
                 throw new Error("Invalid factory type");
         }
@@ -34,6 +37,8 @@ class StrategyFactory {
                 return (0, strategyFactory_DGL_config_1.getAddress)(chainId);
             case "DVMDT":
                 return (0, strategyFactory_DVMDT_config_1.getAddress)(chainId);
+            case "YTR":
+                return (0, strategyFactory_YTR_config_1.getAddress)(chainId);
             default:
                 throw new Error("Invalid factory type");
         }
@@ -51,6 +56,19 @@ class StrategyFactory {
         }
     }
     getCreateStrategyData() {
+        // TODO: rename deployStrategy to createStrategy so I don't need this hacky fix
+        if (this.factoryType === "YTR") {
+            const encodedData = (0, viem_1.encodeFunctionData)({
+                abi: this.getAbi(),
+                functionName: "deployStrategy",
+                args: ['Yeeter'], // TODO: why does it require a name parameter?
+            });
+            return {
+                to: this.factory || this.getAddress(this.chainId),
+                data: encodedData,
+                value: "0",
+            };
+        }
         const encodedData = (0, viem_1.encodeFunctionData)({
             abi: this.getAbi(),
             functionName: "createStrategy",

@@ -1,5 +1,5 @@
 import { TransactionData } from "../../types";
-export type StrategyFactoryType = "DGL" | "DVMDT";
+export type StrategyFactoryType = "DGL" | "DVMDT" | "YTR";
 export declare class StrategyFactory {
     private client;
     private contract;

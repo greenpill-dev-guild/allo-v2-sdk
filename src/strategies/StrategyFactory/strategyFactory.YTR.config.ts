@@ -3,6 +3,7 @@ export const getAddress = (chainId: number): `0x${string}` => {
   switch (chainId) {
     case 300: // ZkSync Era Testnet
     case 324: // ZkSync Era Mainnet
+    case 11155111: // Sepolia
       return "0xA4d5a9eFeF7ee460E08A94fBaC100aABDd8340d7";
     default:
       throw new Error("Chain not supported by SDK");
