@@ -56,19 +56,6 @@ class StrategyFactory {
         }
     }
     getCreateStrategyData() {
-        // TODO: rename deployStrategy to createStrategy so I don't need this hacky fix
-        if (this.factoryType === "YTR") {
-            const encodedData = (0, viem_1.encodeFunctionData)({
-                abi: this.getAbi(),
-                functionName: "deployStrategy",
-                args: ['Yeeter'], // TODO: why does it require a name parameter?
-            });
-            return {
-                to: this.factory || this.getAddress(this.chainId),
-                data: encodedData,
-                value: "0",
-            };
-        }
         const encodedData = (0, viem_1.encodeFunctionData)({
             abi: this.getAbi(),
             functionName: "createStrategy",
