@@ -231,7 +231,7 @@ export class YeeterStrategy {
     });
 
     return {
-      to: this.strategy!,
+      to: this.allo.address(),
       data: encodedData,
       value: totalNativeAmount.toString(),
     };

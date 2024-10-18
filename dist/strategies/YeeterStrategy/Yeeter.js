@@ -194,7 +194,7 @@ class YeeterStrategy {
             args: [this.poolId, allocationBytes],
         });
         return {
-            to: this.strategy,
+            to: this.allo.address(),
             data: encodedData,
             value: totalNativeAmount.toString(),
         };
