@@ -4,10 +4,8 @@ import {
   Transport,
   encodeAbiParameters,
   encodeFunctionData,
-  encodePacked,
   extractChain,
   getContract,
-  keccak256,
   parseAbiParameters,
 } from "viem";
 import { Allo } from "../../Allo/Allo";
@@ -215,13 +213,9 @@ export class YeeterStrategy {
 
     let totalNativeAmount = BigInt(0);
 
-    for (const allocation of allocations.amounts) {
-      if (allocations.token.toLowerCase() === NATIVE.toLowerCase())
-        totalNativeAmount += allocation;
-    }
-
-    const allocationBytes = keccak256(
-      encodePacked(['address[]', 'uint256[]', 'address'], [allocations.recipientIds, allocations.amounts, allocations.token])
+    const allocationBytes = encodeAbiParameters(
+      parseAbiParameters("address[], uint256[], address"),
+      [allocations.recipientIds, allocations.amounts, allocations.token]
     )
 
     const encodedData = encodeFunctionData({

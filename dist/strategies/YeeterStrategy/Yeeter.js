@@ -15,7 +15,6 @@ const Allo_1 = require("../../Allo/Allo");
 const allo_config_1 = require("../../Allo/allo.config");
 const Client_1 = require("../../Client/Client");
 const chains_config_1 = require("../../chains.config");
-const types_1 = require("../../types");
 const yeeter_config_1 = require("./yeeter.config");
 class YeeterStrategy {
     constructor({ chain, rpc, address, poolId }) {
@@ -183,11 +182,7 @@ class YeeterStrategy {
     getAllocateData(allocations) {
         this.checkStrategy();
         let totalNativeAmount = BigInt(0);
-        for (const allocation of allocations.amounts) {
-            if (allocations.token.toLowerCase() === types_1.NATIVE.toLowerCase())
-                totalNativeAmount += allocation;
-        }
-        const allocationBytes = (0, viem_1.keccak256)((0, viem_1.encodePacked)(['address[]', 'uint256[]', 'address'], [allocations.recipientIds, allocations.amounts, allocations.token]));
+        const allocationBytes = (0, viem_1.encodeAbiParameters)((0, viem_1.parseAbiParameters)("address[], uint256[], address"), [allocations.recipientIds, allocations.amounts, allocations.token]);
         const encodedData = (0, viem_1.encodeFunctionData)({
             abi: allo_config_1.abi,
             functionName: "allocate",
