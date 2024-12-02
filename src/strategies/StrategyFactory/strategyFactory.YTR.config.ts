@@ -4,7 +4,8 @@ export const getAddress = (chainId: number): `0x${string}` => {
     case 300: // ZkSync Era Testnet
     case 324: // ZkSync Era Mainnet
     case 42161: // arbitrum
-      return "0xb3675CA56C1A5Ce4ec742614ec6470d4386E7224";
+      // return "0xb3675CA56C1A5Ce4ec742614ec6470d4386E7224";
+      return "0x8CF9b4f85342961195fcCF73F82e710D4402587A";
     case 11155111: // Sepolia
       // return "0xA4d5a9eFeF7ee460E08A94fBaC100aABDd8340d7"; Lawal's original pointing to Allo
       // return "0xF93CEcFF21fA26d66Be1D0f28123DD5Ec56118e8"; // Julian's pointing to proxy
